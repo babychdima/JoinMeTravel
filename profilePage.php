@@ -18,7 +18,6 @@ if (isset($_POST['fPasswordSubmit'])){
 
     if(empty($login)){
 
-//           $forgerErr = 'Email is empty';
         $emptyLogin=true;
         header("Location: mainMainPage.php?action=login&result=1");
     }else{
