@@ -1,0 +1,448 @@
+
+/* Custom default button */
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus {
+  color: #333;
+  text-shadow: none; /* Prevent inheritance from `body` */
+  background-color: #fff;
+  border: .05rem solid #fff;
+}
+
+body {
+
+  text-align: center;
+
+}
+
+
+/*
+ * Base structure
+ */
+
+
+.navbar-right{
+
+  font-size: 18px;
+
+}
+
+#footBar{
+  padding-top: 2%;
+  font-size: 15px;
+  color: #337ab7;
+  background-color: white;
+  text-align: center;
+  margin-top:15px;
+  height: 90px;
+}
+
+.cover-container {
+  background-color: aqua;
+
+  width: 100%;
+  height: 500px;
+
+}
+
+/* Padding for spacing */
+.inner {
+  padding: 2rem;
+}
+
+
+/*
+ * Header
+ */
+
+.masthead {
+  margin-bottom: 2rem;
+}
+
+.cover-heading{
+  padding-top: 0.5em;
+
+}
+
+.masthead-brand {
+  margin-bottom: 0;
+}
+
+
+.nav-masthead .nav-link {
+  padding: .25rem 0;
+  font-weight: bold;
+  color: #fff;
+  background-color: transparent;
+  border-bottom: .25rem solid transparent;
+}
+
+.nav-masthead .nav-link:hover,
+.nav-masthead .nav-link:focus {
+  border-bottom-color: rgba(255,255,255,.25);
+}
+
+.nav-masthead .nav-link + .nav-link {
+  margin-left: 1rem;
+}
+
+.nav-masthead .active {
+  
+  border-bottom-color: #fff;
+
+}
+
+/*The whole navigation bar*/
+
+
+
+/*
+ * Cover
+ */
+
+.cover {
+  padding: 0 1.5rem;
+}
+.cover .btn-lg {
+  padding: .75rem 1.25rem;
+  font-weight: bold;
+}
+
+
+/*
+ * Footer
+ */
+
+.mastfoot {
+  color: rgba(255,255,255,.5);
+}
+
+
+/*
+ * Affix and center
+ */
+
+@media (min-width: 0em) {
+
+  /* Start the vertical centering */
+  .site-wrapper-inner {
+    vertical-align: middle;
+  }
+  /* Handle the widths */
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    width: 100%; /* Must be percentage or pixels for horizontal alignment */
+  }
+
+}
+
+@media (min-width: 0em) {
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    background: url("mainImage.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+}
+
+/*WhyJoin section */
+#whyJoin{
+margin-top: 2%;
+
+}
+
+
+#whyImage{
+ text-align: left;
+  height: 17em;
+  border: 5px #a8a8a8 groove;
+}
+
+
+
+#descriptionWhy{
+  text-align: center;
+}
+
+#review1{
+  background-color: lightblue;
+  height:10em;
+}
+
+
+#review2{
+  background-color: mediumturquoise;
+  height:10em;
+}
+
+/*Counter*/
+#oval{
+  width: 5em;
+  height: 5em;
+  border-radius: 70%;
+  font-size: 50px;
+  color: #fff;
+  line-height: 5em;
+  text-align: center;
+  /*background: #337ab7;*/
+  background: #a8a8a8;
+
+}
+
+#counterTextContainer{
+  margin-top:5%;
+}
+
+#counterText{
+  font-family: 'Kaushan Script', cursive;
+  font-size:2.5em;
+
+}
+
+/*HORIZONTAL ALIGNMENT*/
+#counter{
+  margin-top: 2%;
+  display: flex;
+  justify-content: center;
+}
+
+#imageTitle{
+    font-family: 'Kaushan Script', cursive;
+    font-size:5em;
+    -webkit-text-fill-color: #25183D;
+    -webkit-text-stroke-width: 1px;
+
+}
+
+#imageText{
+    font-family: 'Roboto', sans-serif;
+    font-size:1.75em;
+    -webkit-text-fill-color:  #25183D;
+padding-bottom:1em;
+text-align:right;
+}
+#imageTextTitle{
+  font-family: 'Roboto', sans-serif;
+  font-size:1.75em;
+  -webkit-text-fill-color:  #25183D;
+  padding-bottom:1em;
+  text-align:center;
+}
+#mainPageIcons{
+  margin-top: 35px;
+  margin-bottom: 35px;
+}
+
+#imageDiv{
+    background: rgba(255,255,255,0.4);
+    margin-top: 10em;
+}
+
+.forgetError{
+  font-family: 'Roboto', sans-serif;
+
+  -webkit-text-fill-color:  #25183D;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: left;
+  padding-top: 0.5em;
+}
+#optionText{
+    font-family: 'Roboto', sans-serif;
+    font-size:1.75em;
+}
+
+#whyJoinMeTravel{
+    font-family: 'Kaushan Script', cursive;
+    font-size:3em;
+}
+
+.inputLogin{
+text-align: left;
+padding-top: 0.5em;
+}
+.fPassword{
+    font-size: 1.2em;
+  text-align: left;
+}
+
+.loginBtn{
+  margin-top:15px;
+
+}
+
+#loginBtn{
+  width: 15%;
+}
+
+#loginName{
+  width: 40%;
+}
+#loginPassword{
+  width: 40%;
+}
+.textLogin{
+
+
+}
+
+
+
+@media (max-width: 400px) {
+
+
+}
+
+
+
+#profileImage{
+
+
+  background-color: cadetblue;
+  height: 12em;
+  width: 10em;
+
+}
+#fPasswordBtn{
+    font-weight: bold;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+}
+
+#feedbackImage{
+
+  background-color: cadetblue;
+  height: 8em;
+  width: 7em;
+
+}
+
+#RembMeText{
+  font-size: 1.2em;
+  text-align: right;
+
+}
+
+
+#test{
+  background-color: #333333;
+}
+
+#profileDetails{
+  text-align:left;
+  margin-top: 1em;
+  float: right;
+
+}
+
+#profilePic{
+  padding-left: 5%;
+}
+
+#profileDescription{
+  text-align:left;
+  margin-top: 1em;
+  float: right;
+
+}
+
+#profileAddress{
+  text-align:left;
+  margin-top: 1em;
+  float: right;
+  background-color: #666666;
+}
+.site-container{
+  min-width: 600px;
+  margin-right: 10%;
+}
+
+.main-container{
+  min-width: 900px;
+}
+
+#profileBody{
+  background-color: #edeef0;
+}
+
+.profileBox{
+  background-color:white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 5px 0 rgba(0, 0, 0, 0.19);
+  margin-left: 10%;
+  margin-top: 15px;
+  padding: 30px 20px;
+  min-height: 250px;
+}
+
+/*.profileLevelTwo{*/
+  /*background-color:white;*/
+  /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 5px 0 rgba(0, 0, 0, 0.19);*/
+  /*margin-top: 15px;*/
+  /*margin-left: 10%;*/
+  /*padding: 15px 15px 15px 15px;*/
+  /*height: 250px;*/
+/*}*/
+/*.profileLevelThree{*/
+  /*background-color:white;*/
+  /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 5px 0 rgba(0, 0, 0, 0.19);*/
+  /*margin-top: 15px;*/
+  /*margin-left: 10%;*/
+  /*padding: 15px 15px 15px 15px;*/
+  /*height: 250px;*/
+/*}*/
+
+
+#boxContent{
+  font-size: 15px;
+  text-align: justify;
+
+}
+
+
+
+#boxHeader{
+  padding-right: 30px;
+  padding-left: 30px;
+  text-align: left;
+  font-size: 20px;
+  padding-bottom: 10px;
+}
+
+#editbtn{
+  float: right;
+}
+
+#icons{
+
+  height: 3em;
+  width: 2em;
+
+}
+
+
+#whyJoinText1{
+  font-size: 1.5em;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+
+}
+
+#whyJoinText2{
+  font-size: 1.5em;
+  font-family: 'Kaushan Script', cursive;
+  text-align: center;
+}
+
+#listWhy{
+  margin-top: 1em;
+}
+
+#whyList{
+  margin: 1em;
+}
+

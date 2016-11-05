@@ -1,0 +1,8 @@
+.wrapper { max-width:700px; margin: 0 auto; }
+img { max-width:100%; height:auto; }
+.portfolio-thumb-slider .slick-slider-item { padding: 5px; }
+.portfolio-thumb-slider { margin: 0 -5px 5px -5px; }
+.portfolio-thumb-slider .slick-active img { outline: 2px solid transparent; }
+.portfolio-thumb-slider .slick-current img { outline-color: green; }
+.slick-slider { margin-bottom: 0px; }
+.controls { text-align: center; padding: 10px; font-family: monospace; font-weight: bold; }

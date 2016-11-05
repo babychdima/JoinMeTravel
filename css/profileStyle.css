@@ -1,0 +1,38 @@
+#navBar{
+    background-color: #25183d;
+    margin-bottom: 15px;
+}
+#footBar{
+    padding-top: 2%;
+    font-size: 15px;
+    color: #edeef0;
+    background-color: #25183d;
+    text-align: center;
+    margin-top:15px;
+    height: 90px;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+
+    text-decoration: none;
+    background-color: #edeef0;
+    box-shadow: 0 3px 5px 0 gray;
+
+}
+a:focus, a:hover {
+    color: #25183d;
+}
+a{
+    color:#edeef0;
+}
+a.navbar-brand:hover,a.navbar-brand:focus {
+    color: #edeef0;
+}
+
+/*Pictures settings*/
+.mySlides {display:none}
+.demo {cursor:pointer}
+
+.glyphicon {
+    color:white;
+}
