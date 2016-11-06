@@ -83,7 +83,7 @@ if (isset($_GET)||isset($_POST)){
 
       <ul class="nav navbar-nav navbar-right">
         <li><a href="mainMainPage.php?action=login">Login</a></li>
-       <li><a href="#">Register</a></li>
+       <li><a href="registration.php">Register</a></li>
        <li><a href="#">Contact Us</a></li>
           </ul>
         </li>

@@ -265,7 +265,7 @@ if (isset($_POST['btnSubmit'])){
                     <div class="row">
                         <div class="col-sm-4 form-group">
                             <label>City</label>
-                            <input name="city" type="text" placeholder="Enter City Name Here.." class="form-control">
+                            <input name="city"  type="text" placeholder="Enter City Name Here.." class="form-control">
                         </div>
                         <div class="col-sm-4 form-group">
                             <label>Country</label>

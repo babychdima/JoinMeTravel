@@ -28,7 +28,6 @@ if (isset($_POST['fPasswordSubmit'])){
 
                 if ($e === end($email)){
 
-                    // $forgerErr = 'Email is not registered';
 
                     $regEmail=true;
                     header("Location: mainMainPage.php?action=login&result=2");
@@ -55,7 +54,6 @@ if (isset($_POST['fPasswordSubmit'])){
     }
 
 }
-
 else if (isset($_POST['btnSubmit'])) {
     if (isset($_POST['email']) && isset($_POST['password'])) {
 
