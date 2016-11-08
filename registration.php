@@ -117,6 +117,11 @@ if (isset($_POST['btnSubmit'])){
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
     <link href="css/cover.css" rel="stylesheet">
     <link href="css/profileStyle.css" rel="stylesheet">
     <style>
@@ -181,6 +186,7 @@ if (isset($_POST['btnSubmit'])){
             }
         }
     </style>
+
 </head>
 <body><?php include "header.php"?>
 <div class="container">
@@ -230,13 +236,20 @@ if (isset($_POST['btnSubmit'])){
                     <div class="row">
                     <div class="form-group  col-sm-6">
                         <label >Date of Birth</label>
-                        <input type="date" name="dob" class="form-control">
+                        <input type="text" name="dob" id="datepicker" class="form-control">
+<!--                        <div id="datepicker"></div>-->
                     </div>
                    <!--     <div class="form-group  col-sm-6">
                             <label >Gender</label><br>
                             <label class="radio-inline"><input type="radio" name="gender">Male</label>
                             <label class="radio-inline"><input type="radio" name="gender">Female</label>
                         </div>-->
+
+                        <script>
+
+                            $( "#datepicker" ).datepicker();
+
+                        </script>
 
                     <div class="form-group  col-sm-6">
                  <!--   <form id="upload_form"

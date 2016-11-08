@@ -13,12 +13,15 @@ setcookie('password', '', $expire->getTimestamp(), "/", "localhost", false, true
 
 session_start();
 
-echo isset($_SESSION['email']) ?  $_SESSION['email'] :  "not found";
+echo isset($_SESSION['joinMeTravel']) ?  $_SESSION['joinMeTravel'] :  "not found";
 
 
 //destroy username session variable
-unset($_SESSION['email']);
-header("Location:mainMainPage.php");
+unset($_SESSION['joinMeTravel']);
+
+session_destroy();
+
+header("Location:mainMainPage.php?action=login");
 ?>
 
 

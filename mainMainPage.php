@@ -1,4 +1,5 @@
 <?php require('databaseFile.php');
+session_start();
 $forgerErr = '';
 $emptyLogin = false;
 $regEmail = false;
@@ -6,6 +7,12 @@ $sentEmail = false;
 $login = "";
 $actionForm = "";
 $notFound = false;
+$incorrectInput=false;
+
+if(!empty($_SESSION['joinMeTravel'])){
+    header("Location: profilePage.php");
+}
+
 
 if (isset($_GET['result'])){
     if ($_GET['result']==1){
@@ -25,6 +32,10 @@ if (isset($_GET['result'])){
     else if ($_GET['result']==4){
 
         $notFound = true;
+    }
+    else if ($_GET['result']==5){
+
+        $incorrectInput = true;
     }
 }
 
@@ -194,8 +205,19 @@ if (isset($_GET)||isset($_POST)){
             </script>
 
 
-            <?php }?>
+            <?php }
+            else if ($incorrectInput){?>
+            <script>
+                document.getElementById("modalBtn").click();
 
+                function custom_alert() {
+                    $("<div title='Error'>Incorrect email or password</div>").dialog();
+                }
+
+            </script>
+
+
+            <?php }?>
 
             </div>
 

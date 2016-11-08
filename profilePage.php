@@ -1,17 +1,20 @@
 <?php require('databaseFile.php');
+session_start();
 $emptyLogin = false;
 $regEmail = false;
 $sentEmail = false;
 $login = "";
 $result=0;
-session_start();
 $email = null;
 $password = null;
-if (isset($_POST['fPasswordSubmit'])){
+$user_name='';
+
+if (isset($_POST['fPasswordSubmit']) ){
+
+
     include "PHPMailer/gmail.php";
 
     $email = TravelDatabase::getLogin();
-
 
     $login = $_POST['email'];
 
@@ -28,9 +31,9 @@ if (isset($_POST['fPasswordSubmit'])){
 
                 if ($e === end($email)){
 
-
                     $regEmail=true;
                     header("Location: mainMainPage.php?action=login&result=2");
+
                 }
             }
 
@@ -40,26 +43,27 @@ if (isset($_POST['fPasswordSubmit'])){
 
                 foreach ($password as $p){
 
-//                        $forgerErr = " Email was sent";
 
-                    phpMailer($login, $p['user_password']);
+//                    phpMailer($login, $p['user_password']);
 
                     $sentEmail = true;
                     header("Location: mainMainPage.php?action=login&result=3");
 
                     break 2;
+
                 }
             }
         }
     }
-
 }
-else if (isset($_POST['btnSubmit'])) {
+else if (isset($_POST['btnSubmit']) ) {
     if (isset($_POST['email']) && isset($_POST['password'])) {
 
-        $email = $_POST['email'];
 
+        $email = $_POST['email'];
         $password = $_POST['password'];
+
+
         $sql = "SELECT email,user_password FROM user_table WHERE email = '" . $email . "' and user_password = '" . $password . "'";
         $statement = $db->prepare($sql);
         $statement->execute();
@@ -68,7 +72,12 @@ else if (isset($_POST['btnSubmit'])) {
         $statement->closeCursor();
         if ($count > 0) {
 
+            //creating session when email and password are correct
+            $_SESSION['joinMeTravel'] = $email;
+
+
             if (isset($_POST['rememberMe'])) {
+
 
                 $name = "email";
                 $value = $_GET['email'];
@@ -86,8 +95,31 @@ else if (isset($_POST['btnSubmit'])) {
                     setcookie('password', '', $expire->getTimestamp(), "/", "localhost", false, true);
                 }
             }
-        }
 
+        }else{
+            //transferring to the main page if email / password is not correct
+            header("Location:mainMainPage.php?action=login&result=5");
+        }
+    }
+
+    //transferring to the main page if session is not set
+}else if(empty($_SESSION['joinMeTravel'])){
+
+    header("Location:mainMainPage.php");
+
+}
+
+//getting all user info from user_table
+$userInfo = TravelDatabase::getUserInfo($_SESSION['joinMeTravel']);
+
+foreach ($userInfo as $ui) {
+
+    $user_name = $ui['user_firstname'];
+    $occupation = $ui['occupation'];
+    $dob = $ui['date_of_birth'];
+    $address = $ui['address'];
+    $summary = $ui['summary'];
+}
 ?>
 
 <!doctype html>
@@ -95,7 +127,7 @@ else if (isset($_POST['btnSubmit'])) {
 <head>
 
     <title>
-        My Page
+        Profile Page
     </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
@@ -141,17 +173,17 @@ else if (isset($_POST['btnSubmit'])) {
                         <table>
                             <tr>
                                 <td style="font-weight: bold">Full name:</td>
-                                <td>Phoebe Buffay</td>
+                                <td><?php echo $user_name;?></td>
                             </tr>
 
                             <tr>
                                 <td style="font-weight: bold">Occupation:</td>
-                                <td>Messause</td>
+                                <td><?php echo $occupation;?></td>
                             </tr>
 
                             <tr>
                                 <td style="font-weight: bold">Date of birth:</td>
-                                <td>23rd June, 1994</td>
+                                <td><?php echo $dob;?></td>
                             </tr>
 
                             <tr>
@@ -162,7 +194,7 @@ else if (isset($_POST['btnSubmit'])) {
 
                             <tr>
                                 <td style="font-weight: bold">Address</td>
-                                <td>Ap #867-859 Sit Rd. Azusa New York 39531</td>
+                                <td><?php echo $address;?></td>
                             </tr>
 
                        </table>
@@ -182,8 +214,7 @@ else if (isset($_POST['btnSubmit'])) {
                 <div class="col-sm-12 col-xs-12" id="boxContent" >
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            I am a fun loving and an adventurous person.I am a very friendly person and love spending time with my friends and meeting new people.
-                            When it comes to travelling, I am very enthusiastic, flexible and a very outgoing person
+                            <?php echo $summary;?>
 
                         </div>
                     </div>
@@ -334,13 +365,4 @@ else if (isset($_POST['btnSubmit'])) {
 <script src="js/slider.js"></script>
 </body>
 </html>
-    <?php
-}
-else{
-    header("Location:mainMainPage.php");
-}
-}
-else{
-    header("Location:mainMainPage.php");
-}
-?>
+

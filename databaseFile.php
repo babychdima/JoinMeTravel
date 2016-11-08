@@ -71,5 +71,25 @@ class TravelDatabase
         return $password;
 
     }
+
+    public static function getUserInfo($email){
+         try{
+             self::$db = self::getDB();
+
+             $queryInsurance = 'select * from user_table where email = :email';
+             $statement = self::$db->prepare($queryInsurance);
+             $statement->bindValue(':email', $email);
+             $statement->execute();
+             $userInfo = $statement->fetchAll();
+             $statement->closeCursor();
+
+         }catch
+         (PDOException $e) {
+             exit();
+         }
+
+         return $userInfo;
+    }
+
 }
 ?>
