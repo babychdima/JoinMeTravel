@@ -9,9 +9,18 @@ $actionForm = "";
 $notFound = false;
 $incorrectInput=false;
 
-if(!empty($_SESSION['joinMeTravel'])){
+//if session exists - open profilePage directly
+if(!empty($_SESSION['joinMeTravel'])) {
+
     header("Location: profilePage.php");
+
+}//if cookies are set - open profilePage directly
+elseif (isset($_COOKIE['email'])){
+
+    header("Location: profilePage.php");
+
 }
+
 
 
 if (isset($_GET['result'])){
@@ -36,6 +45,7 @@ if (isset($_GET['result'])){
     else if ($_GET['result']==5){
 
         $incorrectInput = true;
+
     }
 }
 
@@ -64,7 +74,9 @@ if (isset($_GET)||isset($_POST)){
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Dosis|Kaushan+Script|Open+Sans|Pathway+Gothic+One|Roboto+Condensed|Roboto:700" rel="stylesheet">
 <link href="css/cover.css" rel="stylesheet">
-
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.0-beta.1/JSXTransformer.js"></script>
 
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -126,29 +138,27 @@ if (isset($_GET)||isset($_POST)){
     </div>
         <div class="col-sm-6" >
             <div class="inputLogin">
-                <input type="text" id="loginName" name="email" value="<?php if(isset($_COOKIE['email'])){ echo $_COOKIE['email'];} else{echo "";}?>">
+                <input type="text" id="loginName" name="email">
             </div>
         </div>
 
     </div>
     <div class="row">
         <div class="col-sm-6 col-xs-6" class="lead" id="imageText">
-            <div   class="textLogin">Password </div>
+            <div class="textLogin">Password </div>
 
         </div>
         <div class="col-sm-6" >
             <div class="inputLogin">
 
-                <input type="password" id="loginPassword" name="password" value="<?php if(isset($_COOKIE['password']))
-                { echo $_COOKIE['password'];} else{echo "";}?>"></div>
+                <input type="password" id="loginPassword" name="password" ></div>
         </div>
     </div>
 
     <div class="row">
         <div class="col-sm-6 col-xs-6" class="lead" id="RembMeText">
 
-                <input type="checkbox" value="rememberMe" <?php if(isset($_COOKIE['JoinMeTravel']))
-                { echo "checked='checked'";}?>> remember me
+                <input type="checkbox" value="rememberMe" name="rememberMe"> remember me
 
         </div>
         <div class="col-sm-6">
@@ -284,31 +294,64 @@ if (isset($_GET)||isset($_POST)){
  </div>
     <div class="row">
         <div class="col-sm-12" id="counterTextContainer">
-            <span id="counterText">How many travelers use JoinMeTravel?</span>
+            <span id="counterText">Look, how much time you are on the Welcome page! It's time to REGISTER!</span>
     </div>
         </div>
-<div class="row">
-    <div class="col-sm-12" id="counter">
-     <div id="oval">  <span class="count">200</span></div>
-</div>
-</div>
-</div>
+        <div class="row">
+            <div class="col-sm-12" id="counter">
+                <div id="oval">  <div id="count">0</div></div>
+            </div>
+        </div>
+    </div>
     <hr style="border-width: 3px; border-color: darkgrey;">
     <?php include "footer.php"?>
-    </div>
+</div>
 
-<script>
-    $('.count').each(function () {
-        $(this).prop('Counter',0).animate({
-            Counter: $(this).text()
-        }, {
-            duration: 4000,
-            easing: 'swing',
-            step: function (now) {
-                $(this).text(Math.ceil(now));
-            }
-        });
+<script type="text/jsx">
+    var TimerExample = React.createClass({
+
+        getInitialState: function(){
+
+
+            return { elapsed: 0 };
+        },
+
+        componentDidMount: function(){
+
+
+
+            this.timer = setInterval(this.tick, 50);
+        },
+
+        componentWillUnmount: function(){
+
+
+            clearInterval(this.timer);
+        },
+
+        tick: function(){
+
+
+            this.setState({elapsed: new Date() - this.props.start});
+        },
+
+        render: function() {
+
+            var elapsed = Math.round(this.state.elapsed / 100);
+
+
+            var seconds = (elapsed / 10).toFixed(1);
+
+
+            return <p>{seconds}</p>;
+        }
     });
+
+
+    ReactDOM.render(
+        <TimerExample start={Date.now()} />,
+        document.getElementById('count')
+    );
 </script>
 
 	</body>

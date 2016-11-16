@@ -4,7 +4,6 @@
             <span class="sr-only" >Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="#">Join Me Travel</a>
     </div>
@@ -14,10 +13,8 @@
 
 
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="searchPage.php">Search</a></li>
-            <li><a href="profilePage.php">Profile</a></li>
+            <li class="logoutBtn"><a href="mainMainPage.php?action=login" >Login page</a></li>
             <li><a href="#">Contact Us</a></li>
-            <li class="logoutBtn"><a href="logOut.php" >Logout</a></li>
         </ul>
         </li>
         </ul>

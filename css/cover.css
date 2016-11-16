@@ -321,6 +321,14 @@ padding-top: 0.5em;
   width: 7em;
 
 }
+.panel-default{
+  min-height: 10em;
+}
+
+#feedbackDetails{
+  padding-left: 2em;
+  margin-bottom: 0.6em;
+}
 
 #RembMeText{
   font-size: 1.2em;
@@ -336,8 +344,13 @@ padding-top: 0.5em;
 #profileDetails{
   text-align:left;
   margin-top: 1em;
-  float: right;
 
+
+}
+#profileDetails1{
+  padding-left: 2em;
+  font-weight: bold;
+  margin-bottom: 1em;
 }
 
 #profilePic{
@@ -358,25 +371,34 @@ padding-top: 0.5em;
   background-color: #666666;
 }
 .site-container{
-  min-width: 600px;
+  min-width: 670px;
   margin-right: 10%;
 }
 
 .main-container{
   min-width: 900px;
 }
+.regContainer{
+  min-width: 670px;
+  margin-right: 10%;
+  margin-left: 10%;
+}
+
 
 #profileBody{
   background-color: #edeef0;
 }
-
+#imageUploader{
+  display: flex;
+  justify-content: center;
+}
 .profileBox{
   background-color:white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 5px 0 rgba(0, 0, 0, 0.19);
   margin-left: 10%;
   margin-top: 15px;
   padding: 30px 20px;
-  min-height: 250px;
+  min-height: 100px;
 }
 
 /*.profileLevelTwo{*/

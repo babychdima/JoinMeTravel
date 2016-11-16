@@ -7,11 +7,12 @@
 
 include "header.php";?>
 <?php
+session_start();
+
 $expire = new DateTime('-1 month');
 setcookie('email', '', $expire->getTimestamp(), "/", "localhost", false, true);
-setcookie('password', '', $expire->getTimestamp(), "/", "localhost", false, true);
+//setcookie('password', '', $expire->getTimestamp(), "/", "localhost", false, true);
 
-session_start();
 
 echo isset($_SESSION['joinMeTravel']) ?  $_SESSION['joinMeTravel'] :  "not found";
 
