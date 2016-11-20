@@ -275,6 +275,7 @@ if (isset($_POST['btnSubmit'])){
     <!--block one-->
     <div class="col-lg-12 well">
         <div class="row">
+
             <form method="post" name="registrationForm" action="registration.php">
                 <div class="col-sm-12">
                     <div class="row">
