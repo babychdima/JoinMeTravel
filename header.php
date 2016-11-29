@@ -16,7 +16,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li><a href="searchPage.php">Search</a></li>
             <li><a href="profilePage.php">Profile</a></li>
-            <li><a href="#">Contact Us</a></li>
+            <li><a href="contactUs.php">Contact Us</a></li>
             <li class="logoutBtn"><a href="logOut.php" >Logout</a></li>
         </ul>
         </li>

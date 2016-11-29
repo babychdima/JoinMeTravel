@@ -12,6 +12,7 @@ $password = null;
 $user_name='';
 $emptyNameErr = '';
 $noImagesErr ='';
+$imageNameResult="";
 
 if (isset($_POST['fPasswordSubmit']) ){
 
@@ -62,20 +63,27 @@ else if (isset($_POST['btnSubmit']) ) {
 
         $valResult = TravelDatabase::checkLogin($email, $password);
 
+
         if ($valResult > 0) {
 
+            $userId = TravelDatabase::getUserIdByEmail($email);
+
+            foreach ($userId as $uId){
+                $uid=$uId['user_id'];
+            }
+
             //creating session when email and password are correct
-            $_SESSION['joinMeTravel'] = $email;
+            $_SESSION['joinMeTravel'] = $uid;
 
                 if (isset($_POST['rememberMe'])) {
 
                     $expire = new DateTime('+1 month');
-                    setcookie('email', $email, $expire->getTimestamp(), "/", "localhost", false, true);
+                    setcookie('id', $uid, $expire->getTimestamp(), "/", "localhost", false, true);
 //                    setcookie('password', $password, $expire->getTimestamp(), "/", "localhost", false, true);
 
                 } else {
                     $expire = new DateTime('-1 month');
-                    setcookie('email', '', $expire->getTimestamp(), "/", "localhost", false, true);
+                    setcookie('id', '', $expire->getTimestamp(), "/", "localhost", false, true);
 //                    setcookie('password', '', $expire->getTimestamp(), "/", "localhost", false, true);
 
                 }
@@ -87,8 +95,8 @@ else if (isset($_POST['btnSubmit']) ) {
     }
 
 //create session after restarting browser
-}elseif(isset($_COOKIE['email'])){
-    $_SESSION['joinMeTravel'] = $_COOKIE['email'];
+}else if(isset($_COOKIE['id']) && empty($_SESSION['joinMeTravel'])){
+    $_SESSION['joinMeTravel'] = $_COOKIE['id'];
 }
 //transferring to the main page if session is not set
 else if(empty($_SESSION['joinMeTravel'])){
@@ -139,6 +147,12 @@ $imageName = TravelDatabase::getImage($_SESSION['joinMeTravel']);
 foreach($imageName as $in){
     $imageNameResult = $in['image_name'];
 }
+if($imageNameResult!=''){
+    $displayImage ="src=".$image_dir.DIRECTORY_SEPARATOR.$imageNameResult."";
+}else{
+    $displayImage='';
+}
+
 
 $galleryImageName = TravelDatabase::getGalleryImage($_SESSION['joinMeTravel']);
 if(empty($galleryImageName)){
@@ -204,7 +218,7 @@ foreach ($userInfo as $ui) {
 
                  <div class="col-sm-3 col-xs-3" id="profilePic">
                     <div id="profileImage">
-                        <img src="<?php echo $image_dir.DIRECTORY_SEPARATOR.$imageNameResult; ?>" style="height:100%;width:100%" />
+                        <img <?php echo $displayImage?> style="height:100%;width:100%" />
                     </div>
                      <div>
                         <form id="upload_form"

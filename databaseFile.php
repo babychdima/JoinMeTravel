@@ -94,24 +94,7 @@ class TravelDatabase
 
     }
 
-    public static function getUserInfo($email){
-         try{
-             self::$db = self::getDB();
 
-             $sql = 'select * from user_table where email = :email';
-             $statement = self::$db->prepare($sql);
-             $statement->bindValue(':email', $email);
-             $statement->execute();
-             $userInfo = $statement->fetchAll();
-             $statement->closeCursor();
-
-         }catch
-         (PDOException $e) {
-             exit();
-         }
-
-         return $userInfo;
-    }
 
     public static function updateUserInfo($email, $firstName, $occupation, $address, $summary){
         try{
@@ -129,12 +112,12 @@ class TravelDatabase
 
     }
 
-    public static function getImage($email){
+    public static function getImage($id){
         try
         {
             self::$db = self::getDB();
 
-            $sql = 'SELECT image_name FROM user_table WHERE email = "'.$email.'"';
+            $sql = 'SELECT image_name FROM user_table WHERE user_id = "'.$id.'"';
             $statement = self::$db->prepare($sql);
             $statement->execute();
             $image = $statement->fetchAll();
@@ -149,12 +132,12 @@ class TravelDatabase
 
     }
 
-    public static function updateImageName($email, $filename){
+    public static function updateImageName($id, $filename){
         try
         {
             self::$db = self::getDB();
 
-            $sql = 'UPDATE user_table SET image_name = "'.$filename.'" WHERE email = "'.$email.'"';
+            $sql = 'UPDATE user_table SET image_name = "'.$filename.'" WHERE user_id = "'.$id.'"';
             $statement = self::$db->prepare($sql);
             $statement->execute();
             $statement->closeCursor();
@@ -181,12 +164,12 @@ class TravelDatabase
 
     }
 
-    public static function getGalleryImage($email){
+    public static function getGalleryImage($id){
         try
         {
             self::$db = self::getDB();
 
-            $sql = 'SELECT gallery_image_700 FROM user_images WHERE user_email = "'.$email.'"';
+            $sql = 'SELECT gallery_image_700 FROM user_images WHERE user_id = "'.$id.'"';
             $statement = self::$db->prepare($sql);
             $statement->execute();
             $image = $statement->fetchAll();
@@ -304,5 +287,89 @@ class TravelDatabase
         }
     }
 
+    //insert information into contact_us table
+    public static function insertContactUs($name, $email, $question){
+        try{
+            self::$db = self::getDB();
+
+            $query = 'Insert into contact_us (name, email, question, date_created)
+              values(:name, :email,  :question, :date_created)';
+            $statement = self::$db->prepare($query);
+
+            $statement->bindValue(':name', $name);
+            $statement->bindValue(':email', $email);
+            $statement->bindValue(':question', $question);
+            $statement->bindValue(':date_created', date("Y-m-d H:i:s"));
+
+            $statement->execute();
+            $statement->closeCursor();
+        }catch
+        (PDOException $e) {
+            exit();
+        }
+    }
+
+
+    //insert information into contact_us table
+    public static function insertFeedback($user_id, $question_like, $question_time, $question_visit, $feedback){
+        try{
+            self::$db = self::getDB();
+
+            $query = 'Insert into user_feedback(user_id, date_created, question_like, question_time, question_visit, feedback)
+              values(:user_id, :date_created, :question_like, :question_time, :question_visit, :feedback)';
+            $statement = self::$db->prepare($query);
+            $statement->bindValue(':user_id', $user_id);
+            $statement->bindValue(':date_created', date("Y-m-d H:i:s"));
+            $statement->bindValue(':question_like', $question_like);
+            $statement->bindValue(':question_time', $question_time);
+            $statement->bindValue(':question_visit', $question_visit);
+            $statement->bindValue(':feedback', $feedback);
+            $statement->execute();
+            $statement->closeCursor();
+        }catch
+        (PDOException $e) {
+            exit();
+        }
+    }
+
+    public static function getUserIdByEmail($email){
+        try{
+            self::$db = self::getDB();
+
+            $sql = 'select user_id from user_table where email = "'.$email.'"';
+            $statement = self::$db->prepare($sql);
+            $statement->execute();
+            $userId= $statement->fetchAll();
+            $statement->closeCursor();
+
+        }catch
+        (PDOException $e) {
+            exit();
+        }
+
+        return $userId;
+
+
+    }
+
+
+    public static function getUserInfo($id){
+        try{
+            self::$db = self::getDB();
+
+            $sql = 'select * from user_table where user_id = :id';
+            $statement = self::$db->prepare($sql);
+            $statement->bindValue(':id', $id);
+            $statement->execute();
+            $userInfo = $statement->fetchAll();
+            $statement->closeCursor();
+
+        }catch
+        (PDOException $e) {
+            exit();
+        }
+
+        return $userInfo;
+    }
 }
 ?>

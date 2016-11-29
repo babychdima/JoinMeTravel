@@ -8,25 +8,86 @@
  */
 include ("Validation.php");
 include ("databaseFile.php");
-
-
+session_start();
+//for contactUs form
 $status=-1;
-$errorMessage;
+$errorMessage="";
 $name="";
+$email="";
+$message="";
+
+//for feedback form
+$statusF=-1;
+$errorMessageF="";
+$like="";
+$time="";
+$visit="";
+$feedback="";
+
+
+//check if a session exist
+if (!isset($_SESSION['joinMeTravel'])){
+    ?>
+<style>
+    #tab2{
+        display:none;
+    }
+    #tab2-nav{
+        display: none;
+    }
+</style>
+<?php
+
+
+}
+
+
 
 
 //contact us form
 if (isset($_POST['btnContactUs'])){
-    ?>
-<script>
-alert("success");
-</script>
-<?php
+
     //validation
     if (!Validation::isRequired($_POST['name'])){
         $status = 0;
         $errorMessage = "Enter your name";
     }
+    else if (!Validation::isRequired($_POST['email'])){
+        $status = 0;
+        $errorMessage = "Enter your email";
+    }
+    else if (!Validation::isRequired($_POST['message'])){
+        $status = 0;
+        $errorMessage = "Enter your question";
+    }
+    else {
+        $status=1;
+        $name=$_POST['name'];
+        $email=$_POST['email'];
+        $message=$_POST['message'];
+        $errorMessage="Thank you! Your question was successfully sent";
+        TravelDatabase::insertContactUs($name, $email, $message);
+    }
+}
+else if (isset($_POST['btnFeedback'])){
+    //validation
+    if (isset($_POST['like'])){
+
+       $like=$_POST['like'];
+
+    }
+    if (isset($_POST['time'])){
+        $time=$_POST['time'];
+    }
+    if (isset($_POST['visit'])){
+        $visit=$_POST['visit'];
+    }
+    if (isset($_POST['comment'])){
+        $feedback=$_POST['comment'];
+    }
+    $status=1;
+    $errorMessage="Thank you for your feedback!";
+    TravelDatabase::insertFeedback($_SESSION['joinMeTravel'], $like, $time, $visit, $feedback);
 }
 
 
@@ -146,7 +207,7 @@ alert("success");
                         Contact form </a>
                 </li>
                 <li>
-                    <a href="#tab2" data-toggle="tab">
+                    <a href="#tab2" id="tab2-nav" data-toggle="tab">
                         Feedback </a>
                 </li>
 
@@ -171,7 +232,7 @@ alert("success");
                                         <div class="form-group">
                                             <label for="name">
                                                 Name</label>
-                                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required="required" />
+                                            <input type="text" class="form-control" name="name" placeholder="Enter name" />
                                         </div>
                                         <div class="form-group">
                                             <label for="email">
@@ -179,7 +240,7 @@ alert("success");
                                             <div class="input-group">
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span>
                                 </span>
-                                                <input type="email" class="form-control" id="email" placeholder="Enter email" required="required" /></div>
+                                                <input type="email" class="form-control" name="email" placeholder="Enter email"/></div>
                                         </div>
 
                                     </div>
@@ -187,7 +248,7 @@ alert("success");
                                         <div class="form-group">
                                             <label for="name">
                                                 Message</label>
-                                            <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required"
+                                            <textarea name="message" name="message" class="form-control" rows="9" cols="25"
                                                       placeholder="Message"></textarea>
                                         </div>
                                     </div>
@@ -265,7 +326,7 @@ alert("success");
                             <div class="form-group">
                                 <label class="col-md-5 control-label" for="comment">Leave your feedback about JoinMeTravel</label>
                                 <div class="col-md-4">
-                                    <textarea class="form-control" id="comment" name="comment">Do you want to tell us something?</textarea>
+                                    <textarea class="form-control" id="comment" name="comment"placeholder="Do you want to tell us something?"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-9">
