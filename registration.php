@@ -23,9 +23,41 @@ $destCountry="";
 $destCity="";
 $startDate="";
 $endDate="";
+$travelDescription="";
+
+//check unique email
+function checkEmail($email, $emails){
+    $flag=true;
+    foreach ($emails as $item){
+        if ($item['email']==$email){
+            $flag=false;
+        }
+    }
+    return $flag;
+}
+
+
 
 if (isset($_POST['btnSubmit'])){
     //validation
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
+    $email=$_POST['email'];
+    $password=$_POST['pass'];
+    $occupation=$_POST['occupation'];
+    $address=$_POST['address'];
+    $city=$_POST['city'];
+    $country=$_POST['country'];
+    $description=$_POST['description'];
+    $destCountry=$_POST['destCountry'];
+    $destCity=$_POST['destCity'];
+    $startDate=$_POST['startDate'];
+    $sDate=date('Y-m-d',strtotime($startDate));
+    $endDate=$_POST['endDate'];
+    $eDate=date('Y-m-d',strtotime($endDate));
+    $travelDescription=$_POST['travelDescription'];
+    //get all emails
+    $emails=TravelDatabase::getAllEmails();
 
     //firstName
     if (!Validation::isRequired($_POST['firstName'])) {
@@ -40,6 +72,7 @@ if (isset($_POST['btnSubmit'])){
 
     //lastname
     else if (!Validation::isRequired($_POST['lastName'])) {
+
         $status = 0;
         $errorMessage = "Enter your last name";
     }
@@ -47,16 +80,6 @@ if (isset($_POST['btnSubmit'])){
         $status = 0;
         $errorMessage = "Last name must contain only letters";
 
-    }
-
-    //phone
-    else if (!Validation::isRequired($_POST['phone'])) {
-        $status = 0;
-        $errorMessage = "Enter your phone number";
-    }
-    else if (!Validation::validNumber($_POST['phone'])) {
-        $status = 0;
-        $errorMessage = "Phone number must contain only digits";
     }
 
 
@@ -90,6 +113,10 @@ if (isset($_POST['btnSubmit'])){
         $status = 0;
         $errorMessage = "Enter the valid email";
 
+    }
+    else if (!checkEmail($email, $emails)){
+        $status = 0;
+        $errorMessage = "This email is already registered";
     }
 
     //address
@@ -149,28 +176,21 @@ if (isset($_POST['btnSubmit'])){
         $errorMessage = "Enter where you want to finish your journey";
 
     }
+    else if ($startDate>$endDate) {
+        $status = 0;
+        $errorMessage = "Check dates";
+
+    }
     else {
         $status = 1;
-        $firstName = $_POST['firstName'];
-        $lastName=$_POST['lastName'];
-        $email=$_POST['email'];
-        $password=$_POST['pass'];
-        $occupation=$_POST['occupation'];
-        $address=$_POST['address'];
-        $city=$_POST['city'];
-        $country=$_POST['country'];
-        $description=$_POST['description'];
-        $destCountry=$_POST['destCountry'];
-        $destCity=$_POST['destCity'];
-        $startDate=$_POST['startDate'];
-        $sDate=date('Y-m-d',strtotime($startDate));
-        $endDate=$_POST['endDate'];
-        $eDate=date('Y-m-d',strtotime($endDate));
+
+
+
         //inserting a new user into user_table
-        TravelDatabase::insertUser($firstName, $lastName, $email, $password, $occupation, $address, $city, $country, $description, Validation::$longitude, Validation::$latitude);;
+        TravelDatabase::insertUser($firstName, $lastName, $email, $password, $occupation, $address, $city, $country, $description, Validation::$latitude, Validation::$longitude);;
         //insert a description into a description_table
-        TravelDatabase::insertDescription($email, $description, $destCountry, $destCity, $sDate, $eDate);
-        $errorMessage=$sDate;
+        TravelDatabase::insertDescription($email, $travelDescription, $destCountry, $destCity, $sDate, $eDate);
+        $errorMessage="You have been successfully registered. Please log in";
 
 
     }
@@ -281,32 +301,29 @@ if (isset($_POST['btnSubmit'])){
                     <div class="row">
                         <div class="col-sm-6 form-group">
                             <label>First Name</label>
-                            <input type="text" name="firstName" placeholder="Enter First Name Here.." class="form-control">
+                            <input type="text" name="firstName" placeholder="Enter First Name Here.." class="form-control" value="<?php echo $firstName?>">
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Last Name</label>
-                            <input type="text" name="lastName" placeholder="Enter Last Name Here.." class="form-control">
+                            <input type="text" name="lastName" placeholder="Enter Last Name Here.." value="<?php echo $lastName?>" class="form-control">
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-sm-6 form-group">
                             <label>Password</label>
-                            <input type="text" name="pass" placeholder="Enter Password Here.." class="form-control">
+                            <input type="password" name="pass" placeholder="Enter Password Here.."   class="form-control">
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Confirm a Password</label>
-                            <input type="text" name="cpass" placeholder="Confirm your password.." class="form-control">
+                            <input type="password" name="cpass" placeholder="Confirm your password.." class="form-control">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6 form-group">
-                            <label>Phone Number</label>
-                            <input type="text" name="phone" placeholder="Enter Phone Number Here.." class="form-control">
-                        </div>
+
                         <div class="col-sm-6 form-group">
                             <label>Email Address</label>
-                            <input type="text" name="email" placeholder="Enter Email Address Here.." class="form-control">
+                            <input type="text" name="email" placeholder="Enter Email Address Here.." value="<?php echo $email?>" class="form-control">
                         </div>
                     </div>
                     <div class="row">
@@ -339,16 +356,16 @@ if (isset($_POST['btnSubmit'])){
             <div class="col-sm-12">
                 <div class="form-group">
                     <label>Address</label>
-                    <textarea name="address" placeholder="Enter Address Here.." rows="3" class="form-control"></textarea>
+                    <textarea name="address" placeholder="Enter Address Here.." rows="3" class="form-control"><?php echo $address?></textarea>
                 </div>
                 <div class="row">
                     <div class="col-sm-6 form-group">
                         <label>City</label>
-                        <input name="city" type="text" placeholder="Enter City Name Here.." class="form-control">
+                        <input name="city" type="text" placeholder="Enter City Name Here.." value="<?php echo $city?>" class="form-control">
                     </div>
                     <div class="col-sm-6 form-group">
                         <label>Country</label>
-                        <input name="country" type="text" placeholder="Enter Country Name Here.." class="form-control">
+                        <input name="country" type="text" placeholder="Enter Country Name Here.." value="<?php echo $country?>" class="form-control">
                     </div>
 
                 </div>
@@ -363,33 +380,33 @@ if (isset($_POST['btnSubmit'])){
 
                 <div class="col-sm-12 form-group">
                     <label>Occupation</label>
-                    <input type="text" name="occupation" placeholder="Enter Your Occupation Here.." class="form-control">
+                    <input type="text" name="occupation" placeholder="Enter Your Occupation Here.." value="<?php echo $occupation?>" class="form-control">
                 </div>
                 <div class="col-sm-12 form-group">
                     <label>Description</label>
-                    <textarea name="description" placeholder="Write Something About Yourself..." rows="3" class="form-control"></textarea>
+                    <textarea name="description" placeholder="Write Something About Yourself..." rows="3"  class="form-control"><?php echo $description?></textarea>
                 </div>
                 <div class="col-sm-12 form-group">
                     <label>Describe where you want to go?</label>
-                    <textarea placeholder="Include As Much Specific Information As Possible..." rows="3" class="form-control"></textarea>
+                    <textarea name="travelDescription" placeholder="Include As Much Specific Information As Possible..."  rows="3" class="form-control"><?php echo $travelDescription?></textarea>
                 </div>
                 <div class="row">
                     <div class="col-sm-6 form-group">
                         <label>Destination Country</label>
-                        <input type="text" name="destCountry" placeholder="Enter The Country You Want To Travel To.." class="form-control">
+                        <input type="text" name="destCountry" placeholder="Enter The Country You Want To Travel To.." value="<?php echo $country?>" class="form-control">
                     </div>
                     <div class="col-sm-6 form-group">
                         <label>Destination City</label>
-                        <input type="text" name="destCity" placeholder="Enter The City You Want To Travel To.." class="form-control">
+                        <input type="text" name="destCity" placeholder="Enter The City You Want To Travel To.." value="<?php echo $city?>" class="form-control">
                     </div>
                     <div class="row">
                         <div class="col-sm-6 form-group">
                             <label>Start Date</label>
-                            <input type="text" name="startDate" class="datepicker" class="form-control">
+                            <input type="text" name="startDate" class="datepicker" value="<?php echo $startDate?>" class="form-control">
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>End Date</label>
-                            <input type="text" name="endDate" class="datepicker" class="form-control">
+                            <input type="text" name="endDate" class="datepicker" value="<?php echo $endDate?>" class="form-control">
                         </div>
                     </div>
 

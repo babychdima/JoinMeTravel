@@ -9,10 +9,10 @@ $login = "";
 $result=0;
 $email = null;
 $password = null;
-$user_name='';
+$user_first_name='';
 $emptyNameErr = '';
-$noImagesErr ='';
-$imageNameResult="";
+$noImagesErr = '';
+$imageNameResult = '';
 
 if (isset($_POST['fPasswordSubmit']) ){
 
@@ -161,11 +161,13 @@ if(empty($galleryImageName)){
 
 foreach ($userInfo as $ui) {
 
-    $user_name = $ui['user_firstname'];
+    $user_first_name = $ui['user_firstname'];
+    $user_last_name = $ui['user_lastname'];
     $occupation = $ui['occupation'];
     $dob = $ui['date_of_birth'];
     $address = $ui['address'];
     $summary = $ui['summary'];
+
 }
 
 
@@ -207,13 +209,16 @@ foreach ($userInfo as $ui) {
 <!--Profile content-->
     <div class="site-container">
          <div class="profileBox">
-            <div class = "row">
-                <div class="col-sm-12 col-xs-12" id="boxHeader">
-                    <span> Profile Information</span>
-                    <a href="profileEditor.php" ><span class="label label-default" id="editbtn">edit</span></a>
-                </div>
+             <form method="post" action="profileMessage.php">
+                 <div class = "row">
+                     <div class="col-sm-12 col-xs-12" id="boxHeader">
+                         <span> Profile Information</span>
+                         <a href="profileEditor.php" ><span class="label label-default" id="editbtn">edit</span></a><br>
+                         <button type="submit" name="btnMessage" class="btn btn-primary btn-md" id="editbtn">Messages</button>
+                     </div>
+                 </div>
+             </form>
 
-            </div>
              <div class="row">
 
                  <div class="col-sm-3 col-xs-3" id="profilePic">
@@ -250,7 +255,7 @@ foreach ($userInfo as $ui) {
 
                         <div class="row">
                             <div class="col-sm-3 col-xs-3" id="profileDetails1">Full name:</div>
-                            <div class="col-sm-9 col-xs-9"><?php echo $user_name;?></div>
+                            <div class="col-sm-9 col-xs-9"><?php echo $user_first_name;?> <?php echo $user_last_name;?></div>
                         </div>
                         <div class="row">
                             <div class="col-sm-3 col-xs-3" id="profileDetails1">Occupation:</div>
@@ -300,6 +305,7 @@ foreach ($userInfo as $ui) {
         <div class="row">
             <div class="col-sm-12 col-xs-12" id="boxHeader">
                 <span> Pictures</span>
+
                 <a href="imageEditor.php" ><span class="label label-default" id="editbtn">edit</span></a>
 
             </div>
