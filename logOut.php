@@ -10,7 +10,7 @@ include "header.php";?>
 session_start();
 
 $expire = new DateTime('-1 month');
-setcookie('email', '', $expire->getTimestamp(), "/", "localhost", false, true);
+setcookie('id', '', $expire->getTimestamp(), "/", "localhost", false, true);
 //setcookie('password', '', $expire->getTimestamp(), "/", "localhost", false, true);
 
 
@@ -26,7 +26,5 @@ header("Location:mainMainPage.php?action=login");
 ?>
 
 
-
-<h1>Logged out successfully</h1>
 <?php include "footer.php"?>
 

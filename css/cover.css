@@ -302,7 +302,7 @@ padding-top: 0.5em;
 #profileImage{
 
 
-  background-color: cadetblue;
+  background-color: #edeef0;
   height: 12em;
   width: 10em;
 
@@ -344,8 +344,6 @@ padding-top: 0.5em;
 #profileDetails{
   text-align:left;
   margin-top: 1em;
-
-
 }
 #profileDetails1{
   padding-left: 2em;
