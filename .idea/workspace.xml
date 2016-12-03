@@ -163,7 +163,7 @@
       <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-918">
+            <state relative-caret-position="-4029">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -216,6 +216,7 @@
         <option value="$PROJECT_DIR$/databaseFile.php" />
         <option value="$PROJECT_DIR$/Validation.php" />
         <option value="$PROJECT_DIR$/registration.php" />
+        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
       </list>
     </option>
   </component>
@@ -491,7 +492,7 @@
       <workItem from="1480465121224" duration="4712000" />
       <workItem from="1480523274554" duration="5989000" />
       <workItem from="1480605567804" duration="950000" />
-      <workItem from="1480781923655" duration="22416000" />
+      <workItem from="1480781923655" duration="22480000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1478359567162</created>
@@ -591,11 +592,18 @@
       <option name="project" value="LOCAL" />
       <updated>1480806996266</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Feedbacks">
+      <created>1480808752070</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1480808752070</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="190495000" />
+    <option name="totallyTimeSpent" value="190559000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1356" height="735" extended-state="0" />
@@ -1045,7 +1053,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-918">
+        <state relative-caret-position="-4029">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
