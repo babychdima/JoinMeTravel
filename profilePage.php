@@ -9,9 +9,10 @@ $login = "";
 $result=0;
 $email = null;
 $password = null;
-$user_name='';
+$user_first_name='';
 $emptyNameErr = '';
-$noImagesErr ='';
+$noImagesErr = '';
+$imageNameResult = '';
 
 if (isset($_POST['fPasswordSubmit']) ){
 
@@ -62,20 +63,27 @@ else if (isset($_POST['btnSubmit']) ) {
 
         $valResult = TravelDatabase::checkLogin($email, $password);
 
+
         if ($valResult > 0) {
 
+            $userId = TravelDatabase::getUserIdByEmail($email);
+
+            foreach ($userId as $uId){
+                $uid=$uId['user_id'];
+            }
+
             //creating session when email and password are correct
-            $_SESSION['joinMeTravel'] = $email;
+            $_SESSION['joinMeTravel'] = $uid;
 
                 if (isset($_POST['rememberMe'])) {
 
                     $expire = new DateTime('+1 month');
-                    setcookie('email', $email, $expire->getTimestamp(), "/", "localhost", false, true);
+                    setcookie('id', $uid, $expire->getTimestamp(), "/", "localhost", false, true);
 //                    setcookie('password', $password, $expire->getTimestamp(), "/", "localhost", false, true);
 
                 } else {
                     $expire = new DateTime('-1 month');
-                    setcookie('email', '', $expire->getTimestamp(), "/", "localhost", false, true);
+                    setcookie('id', '', $expire->getTimestamp(), "/", "localhost", false, true);
 //                    setcookie('password', '', $expire->getTimestamp(), "/", "localhost", false, true);
 
                 }
@@ -87,8 +95,8 @@ else if (isset($_POST['btnSubmit']) ) {
     }
 
 //create session after restarting browser
-}elseif(isset($_COOKIE['email'])){
-    $_SESSION['joinMeTravel'] = $_COOKIE['email'];
+}else if(isset($_COOKIE['id']) && empty($_SESSION['joinMeTravel'])){
+    $_SESSION['joinMeTravel'] = $_COOKIE['id'];
 }
 //transferring to the main page if session is not set
 else if(empty($_SESSION['joinMeTravel'])){
@@ -98,6 +106,7 @@ else if(empty($_SESSION['joinMeTravel'])){
 }
 //getting all user info from user_table
 $userInfo = TravelDatabase::getUserInfo($_SESSION['joinMeTravel']);
+$userDescription = TravelDatabase::getUserDescriptionById($_SESSION['joinMeTravel']);
 foreach ($userInfo as $ui){
     $user_id=$ui['user_id'];
 }
@@ -115,7 +124,7 @@ if (isset($_POST['imgUpload'])) {
 
         $filename = $_FILES['file1']['name'];
         if (empty($filename)) {
-            $emptyNameErr = "filename is empty";
+            $emptyNameErr = "Select image";
         }else{
 
             //Upload image name to user_table
@@ -139,19 +148,38 @@ $imageName = TravelDatabase::getImage($_SESSION['joinMeTravel']);
 foreach($imageName as $in){
     $imageNameResult = $in['image_name'];
 }
+if($imageNameResult!=''){
+    $displayImage ="src=".$image_dir.DIRECTORY_SEPARATOR.$imageNameResult."";
+    $noProfileImageErr = '';
+}else{
+    $displayImage='';
+    $noProfileImageErr = 'no profile image';
+}
+
 
 $galleryImageName = TravelDatabase::getGalleryImage($_SESSION['joinMeTravel']);
 if(empty($galleryImageName)){
     $noImagesErr = "No images to display yet...";
 }
 
+foreach ($userDescription as $ud){
+    $user_city = $ud['destinationCity'];
+    $user_country = $ud['destinationCountry'];
+    $user_desc = $ud['description'];
+    $user_stDate = $ud['startDate'];
+    $user_endDate = $ud['endDate'];
+
+}
+
 foreach ($userInfo as $ui) {
 
-    $user_name = $ui['user_firstname'];
+    $user_first_name = $ui['user_firstname'];
+    $user_last_name = $ui['user_lastname'];
     $occupation = $ui['occupation'];
     $dob = $ui['date_of_birth'];
     $address = $ui['address'];
     $summary = $ui['summary'];
+
 }
 
 
@@ -182,7 +210,9 @@ foreach ($userInfo as $ui) {
     <link href="css/cover.css" rel="stylesheet">
     <link href="css/profileStyle.css" rel="stylesheet">
 
+    <style>
 
+    </style>
 </head>
 <body id="profileBody">
 
@@ -193,18 +223,22 @@ foreach ($userInfo as $ui) {
 <!--Profile content-->
     <div class="site-container">
          <div class="profileBox">
-            <div class = "row">
-                <div class="col-sm-12 col-xs-12" id="boxHeader">
-                    <span> Profile Information</span>
-                    <a href="profileEditor.php" ><span class="label label-default" id="editbtn">edit</span></a>
-                </div>
+             <form method="post" action="profileMessage.php">
+                 <div class = "row">
+                     <div class="col-sm-12 col-xs-12" id="boxHeader">
+                         <span> Profile Information</span>
+                         <a href="profileEditor.php" ><span class="label label-default" id="editbtn">edit</span></a><br>
+                         <button type="submit" name="btnMessage" class="btn btn-primary btn-md" id="editbtn">Messages</button>
+                     </div>
+                 </div>
+             </form>
 
-            </div>
              <div class="row">
 
                  <div class="col-sm-3 col-xs-3" id="profilePic">
                     <div id="profileImage">
-                        <img src="<?php echo $image_dir.DIRECTORY_SEPARATOR.$imageNameResult; ?>" style="height:100%;width:100%" />
+                        <img <?php echo $displayImage?> style="height:100%;width:100%" />
+                        <?php echo $noProfileImageErr?>
                     </div>
                      <div>
                         <form id="upload_form"
@@ -233,29 +267,39 @@ foreach ($userInfo as $ui) {
                 </div>
                 <div class="col-sm-9 col-xs-9">
                     <div class="col-sm-12 col-xs-12" id="profileDetails">
-
+                    <form>
+                        <fieldset >
+                            <legend style="font-size: 15px;">General information</legend>
                         <div class="row">
                             <div class="col-sm-3 col-xs-3" id="profileDetails1">Full name:</div>
-                            <div class="col-sm-9 col-xs-9"><?php echo $user_name;?></div>
+                            <div class="col-sm-9 col-xs-9"><?php echo $user_first_name;?> <?php echo $user_last_name;?></div>
                         </div>
                         <div class="row">
                             <div class="col-sm-3 col-xs-3" id="profileDetails1">Occupation:</div>
                             <div class="col-sm-9 col-xs-9"><?php echo $occupation;?></div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3 col-xs-3" id="profileDetails1">Date of birth:</div>
-                            <div class="col-sm-9 col-xs-9"><?php echo $dob;?></div>
+                            <div class="col-sm-3 col-xs-3" id="profileDetails1">Your address:</div>
+                            <div class="col-sm-9 col-xs-9"><?php echo $address;?></div>
+                        </div>
+                        </fieldset>
+                        <fieldset >
+                            <legend style="font-size: 15px;">Description</legend>
+                        <div class="row">
+                            <div class="col-sm-3 col-xs-3" id="profileDetails1">Destination place:</div>
+                            <div class="col-sm-9 col-xs-9"><?php echo $user_city;?>, <?php echo $user_country;?></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3 col-xs-3" id="profileDetails1">Travelling dates:</div>
+                            <div class="col-sm-9 col-xs-9"><?php echo date_format(new DateTime($user_stDate), 'jS F Y');?><br><?php echo date_format(new DateTime($user_endDate), 'jS F Y');?></div>
                         </div>
                         <div class="row">
                             <div class="col-sm-3 col-xs-3" id="profileDetails1">Description:</div>
-                            <div class="col-sm-9 col-xs-9">On the next trip of mine I would surely love to go to Blue Mountain next month, anybody
-                                up for it?</div>
+                            <div class="col-sm-9 col-xs-9"><?php echo $user_desc;?></div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-3 col-xs-3" id="profileDetails1">Address:</div>
-                            <div class="col-sm-9 col-xs-9"><?php echo $address;?></div>
-                        </div>
-
+                        </fieldset>
+                    </form>
                     </div>
                 </div>
 
@@ -286,6 +330,7 @@ foreach ($userInfo as $ui) {
         <div class="row">
             <div class="col-sm-12 col-xs-12" id="boxHeader">
                 <span> Pictures</span>
+
                 <a href="imageEditor.php" ><span class="label label-default" id="editbtn">edit</span></a>
 
             </div>
@@ -298,15 +343,11 @@ foreach ($userInfo as $ui) {
                         <div class="wrapper" >
                             <div class="portfolio-item-slider" >
 
-
-
                                 <?php foreach ($galleryImageName as $gin){ ?>
                                 <div class="slick-slider-item">
                                     <img src="<?php echo $galleryDir . DIRECTORY_SEPARATOR . $gin['gallery_image_700']?>" />
                                 </div>
                                 <?php }?>
-
-
 
                             </div>
                             <!-- .portfolio-item-slider -->

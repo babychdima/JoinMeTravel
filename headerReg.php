@@ -16,7 +16,6 @@
             <li class="logoutBtn"><a href="mainMainPage.php?action=login" >Login page</a></li>
             <li><a href="#">Contact Us</a></li>
         </ul>
-        </li>
-        </ul>
+
     </div>
 </div>

@@ -392,7 +392,8 @@ if (isset($_POST['btnSubmit'])){
                         </div>
                     </div>
 
-                </div> <script>
+                </div>
+                <script>
                     $( ".datepicker" ).datepicker();
                 </script>
                 <input type="submit"  class="btn btn-primary btn-md" value="Submit" name="btnSubmit">

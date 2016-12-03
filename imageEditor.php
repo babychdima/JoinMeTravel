@@ -104,8 +104,8 @@ if(empty($galleryImageName)){
     <link href="css/profileStyle.css" rel="stylesheet">
 
     <style>
-        .input-group-btn {
-            padding-left: 5px;
+        #upload_button {
+            margin-left: 7px;
         }
     </style>
 </head>
@@ -131,7 +131,8 @@ if(empty($galleryImageName)){
                         <input id="BSbtninfo" type="file" name="file1"/>
                         <span class="input-group-btn"></span>
                         <input class="btn btn-primary" id="upload_button" name="imgUpload" type="submit" value="Upload"/>
-                    </div><br>
+                    </div>
+                    <br>
                     <?php echo $err?>
                 </form>
                     <script>
@@ -140,8 +141,6 @@ if(empty($galleryImageName)){
                             buttonName : 'btn-primary',
                             buttonText : 'Select Image'
                         });
-
-
                     </script>
             </div>
 

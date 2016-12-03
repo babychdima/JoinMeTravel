@@ -15,7 +15,7 @@ if(!empty($_SESSION['joinMeTravel'])) {
     header("Location: profilePage.php");
 
 }//if cookies are set - open profilePage directly
-elseif (isset($_COOKIE['email'])){
+elseif (isset($_COOKIE['id'])){
 
     header("Location: profilePage.php");
 

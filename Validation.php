@@ -11,7 +11,8 @@
 
 class Validation
 {
-
+    public static $latitude="";
+    public static $longitude="";
 
     //Checks whether the value is set. Can be reused in another methods before actually making validation
     public static function isRequired($value){
@@ -79,6 +80,21 @@ class Validation
             }
         }
       //  echo "<script type='text/javascript'>alert('The password should be more than 8 characters')</script>";
+        return $flag;
+    }
+
+    public static function validAddress($value){
+        $flag = false;
+        if (self::isRequired($value)) {
+            $prepAddr = str_replace(' ','+',$value);
+            $geocode=file_get_contents('https://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
+            $output= json_decode($geocode, true);
+            if ($output['status'] == 'OK'){
+                self::$latitude =$output['results'][0]['geometry']['location']['lat'];
+                self::$longitude = $output['results'][0]['geometry']['location']['lng'];
+
+                $flag=true;}}
+
         return $flag;
     }
 
